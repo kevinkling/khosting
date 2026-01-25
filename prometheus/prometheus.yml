@@ -1,0 +1,24 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+  external_labels:
+    monitor: 'khosting-monitor'
+
+scrape_configs:
+
+  # Prometheus self-monitoring
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
+
+  # Node Exporter (métricas del sistema host)
+  - job_name: 'node-exporter'
+    static_configs:
+      - targets: ['node-exporter:9100']
+
+  # Docker metrics (requiere habilitar metrics en Docker daemon)
+  # Para habilitarlo: editar C:\ProgramData\docker\config\daemon.json
+  # Agregar: "metrics-addr": "0.0.0.0:9323", "experimental": true
+  - job_name: 'docker'
+    static_configs:
+      - targets: ['host.docker.internal:9323']

@@ -1,0 +1,124 @@
+services:
+  
+  # Nginx Proxy Manager (interfaz visual)
+  nginx-proxy-manager:
+    image: jc21/nginx-proxy-manager:latest
+    container_name: nginx-proxy-manager
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:81:81" # Solo accesible desde localhost
+      - "80:80"
+      - "443:443"
+    expose:
+      - "81"
+    environment:
+      DB_SQLITE_FILE: "/data/database.sqlite"
+      DISABLE_IPV6: 'true'
+    volumes:
+      - npm-data:/data
+      - npm-letsencrypt:/etc/letsencrypt
+    networks:
+      - hosting-network
+    security_opt:
+      - no-new-privileges:true
+
+  # Cloudflare Tunnel
+  cloudflared:
+    image: cloudflare/cloudflared:latest
+    container_name: cloudflared
+    restart: unless-stopped
+    command: tunnel --no-autoupdate run --token ${CLOUDFLARE_TOKEN}
+    networks:
+      - hosting-network
+    depends_on:
+      - nginx-proxy-manager
+    security_opt:
+      - no-new-privileges:true
+
+  # Adminer (interfaz para gestionar bases de datos)
+  adminer:
+    image: adminer:latest
+    container_name: adminer
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:8090:8080" # FIXME: ELIMINAR
+    expose:
+      - "8080"
+    environment:
+      - ADMINER_DEFAULT_SERVER=postgres
+      - ADMINER_DESIGN=nette
+    networks:
+      - hosting-network
+    security_opt:
+      - no-new-privileges:true
+
+  # Portainer
+  portainer:
+    image: portainer/portainer-ce:latest
+    container_name: portainer
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:9000:9000" # FIXME: ELIMINAR
+    expose:
+      - "9000"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer-data:/data
+    networks:
+      - hosting-network
+    security_opt:
+      - no-new-privileges:true
+
+  # Duplicati (Sistema de backups)
+  duplicati:
+    image: lscr.io/linuxserver/duplicati:latest
+    container_name: duplicati
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:8200:8200" # FIXME: ELIMINAR
+    expose:
+      - "8200"
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/Argentina/Buenos_Aires
+      - SETTINGS_ENCRYPTION_KEY=${DUPLICATI_ENCRYPTION_KEY}
+      - CLI_ARGS=--webservice-password=${DUPLICATI_PASSWORD}
+    volumes:
+      - duplicati-config:/config
+      - duplicati-backups:/backups
+      # Volúmenes a respaldar
+      - postgres-data:/source/postgres:ro
+      - npm-data:/source/nginx-proxy-manager:ro
+      - npm-letsencrypt:/source/letsencrypt:ro
+      - portainer-data:/source/portainer:ro
+      - grafana-data:/source/grafana:ro
+      - prometheus-data:/source/prometheus:ro
+      - komprabot-data:/source/komprabot:ro
+    networks:
+      - hosting-network
+    security_opt:
+      - no-new-privileges:true
+
+volumes:
+  npm-data:
+  npm-letsencrypt:
+  portainer-data:
+  duplicati-config:
+  duplicati-backups:
+  postgres-data:
+    name: khosting_postgres-data
+    external: true
+  grafana-data:
+    name: khosting_grafana-data
+    external: true
+  prometheus-data:
+    name: khosting_prometheus-data
+    external: true
+  komprabot-data:
+    name: khosting_komprabot-data
+    external: true
+
+networks:
+  hosting-network:
+    name: hosting-network
