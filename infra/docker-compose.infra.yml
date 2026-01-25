@@ -95,6 +95,31 @@ services:
       - grafana-data:/source/grafana:ro
       - prometheus-data:/source/prometheus:ro
       - komprabot-data:/source/komprabot:ro
+      - jenkins-data:/source/jenkins:ro
+    networks:
+      - hosting-network
+    security_opt:
+      - no-new-privileges:true
+
+  # Jenkins
+  jenkins:
+    build:
+      context: .
+      dockerfile: Dockerfile.jenkins
+    container_name: jenkins
+    restart: unless-stopped
+    user: root
+    privileged: true
+    ports:
+      - "127.0.0.1:8100:8080" # FIXME: ELIMINAR
+      # - "127.0.0.1:50000:50000"
+    expose:
+      - "8080"
+      - "50000"
+    volumes:
+      - jenkins-data:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ..:/khosting
     networks:
       - hosting-network
     security_opt:
@@ -106,6 +131,7 @@ volumes:
   portainer-data:
   duplicati-config:
   duplicati-backups:
+  jenkins-data:
   postgres-data:
     name: khosting_postgres-data
     external: true
@@ -122,3 +148,4 @@ volumes:
 networks:
   hosting-network:
     name: hosting-network
+    external: true

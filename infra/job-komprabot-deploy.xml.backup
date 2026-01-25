@@ -1,0 +1,159 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<project>
+  <actions/>
+  <description></description>
+  <keepDependencies>false</keepDependencies>
+  <properties/>
+  <scm class="hudson.plugins.git.GitSCM" plugin="git@5.8.1">
+    <configVersion>2</configVersion>
+    <userRemoteConfigs>
+      <hudson.plugins.git.UserRemoteConfig>
+        <url>https://github.com/kevinkling/komprabot</url>
+      </hudson.plugins.git.UserRemoteConfig>
+    </userRemoteConfigs>
+    <branches>
+      <hudson.plugins.git.BranchSpec>
+        <name>*/main</name>
+      </hudson.plugins.git.BranchSpec>
+    </branches>
+    <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
+    <submoduleCfg class="empty-list"/>
+    <extensions/>
+  </scm>
+  <canRoam>true</canRoam>
+  <disabled>false</disabled>
+  <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
+  <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
+  <triggers>
+    <com.cloudbees.jenkins.GitHubPushTrigger plugin="github@1.45.0">
+      <spec></spec>
+    </com.cloudbees.jenkins.GitHubPushTrigger>
+  </triggers>
+  <concurrentBuild>false</concurrentBuild>
+  <builders>
+    <hudson.tasks.Shell>
+      <command>#!/bin/bash
+set -euo pipefail
+
+# Colores
+RED=&apos;\033[0;31m&apos;
+GREEN=&apos;\033[0;32m&apos;
+BLUE=&apos;\033[0;34m&apos;
+NC=&apos;\033[0m&apos;
+
+log_info() { echo -e &quot;${BLUE}ℹ️  $1${NC}&quot;; }
+log_success() { echo -e &quot;${GREEN}✅ $1${NC}&quot;; }
+log_error() { echo -e &quot;${RED}❌ $1${NC}&quot;; }
+
+echo &quot;==========================================&quot;
+log_info &quot;Deploy Komprabot - Build #${BUILD_NUMBER}&quot;
+echo &quot;==========================================&quot;
+
+cd ${WORKSPACE}
+
+log_info &quot;Workspace: ${WORKSPACE}&quot;
+log_info &quot;Git Branch: ${GIT_BRANCH}&quot;
+log_info &quot;Git Commit: $(git rev-parse --short HEAD)&quot;
+
+# Verificar archivos necesarios
+if [ ! -f &quot;docker-compose.jenkins.yml&quot; ]; then
+    log_error &quot;No se encuentra docker-compose.jenkins.yml&quot;
+    exit 1
+fi
+
+# Crear .env con credenciales
+log_info &quot;Configurando variables de entorno...&quot;
+cat &gt; .env &lt;&lt; EOF
+KOMPRABOT_BOT_TOKEN=${KOMPRABOT_BOT_TOKEN}
+KOMPRABOT_USE_WEBHOOKS=${KOMPRABOT_USE_WEBHOOKS}
+KOMPRABOT_WEBHOOK_URL=${KOMPRABOT_WEBHOOK_URL}
+IMAGE_TAG=${BUILD_NUMBER}
+EOF
+
+log_success &quot;Variables configuradas&quot;
+log_info &quot;Token: ${KOMPRABOT_BOT_TOKEN:0:10}...&quot;
+log_info &quot;Webhooks: ${KOMPRABOT_USE_WEBHOOKS}&quot;
+log_info &quot;URL: ${KOMPRABOT_WEBHOOK_URL}&quot;
+
+# Detener contenedor anterior
+log_info &quot;Deteniendo versión anterior...&quot;
+docker compose -f docker-compose.jenkins.yml down komprabot 2&gt;/dev/null || true
+
+# Build
+log_info &quot;Construyendo imagen Docker...&quot;
+docker compose -f docker-compose.jenkins.yml build --no-cache komprabot
+
+if [ $? -ne 0 ]; then
+    log_error &quot;Falló la construcción&quot;
+    exit 1
+fi
+
+log_success &quot;Imagen construida: komprabot:${BUILD_NUMBER}&quot;
+
+# Deploy
+log_info &quot;Desplegando komprabot...&quot;
+docker compose -f docker-compose.jenkins.yml up -d komprabot
+
+if [ $? -ne 0 ]; then
+    log_error &quot;Falló el despliegue&quot;
+    exit 1
+fi
+
+# Esperar y verificar
+log_info &quot;Esperando inicio...&quot;
+sleep 10
+
+if ! docker ps | grep -q komprabot; then
+    log_error &quot;El contenedor no está corriendo&quot;
+    docker logs komprabot --tail=100
+    exit 1
+fi
+
+log_success &quot;Contenedor corriendo&quot;
+
+# Mostrar estado
+echo &quot;&quot;
+log_info &quot;Estado del servicio:&quot;
+docker compose -f docker-compose.jenkins.yml ps komprabot
+
+echo &quot;&quot;
+log_info &quot;Logs recientes:&quot;
+docker compose -f docker-compose.jenkins.yml logs --tail=50 komprabot
+
+# Limpiar
+log_info &quot;Limpiando archivos temporales...&quot;
+rm -f .env
+
+log_info &quot;Limpiando imágenes antiguas...&quot;
+docker image prune -f --filter &quot;label=com.khosting.service=komprabot&quot;
+
+echo &quot;&quot;
+echo &quot;==========================================&quot;
+log_success &quot;Deploy completado exitosamente!&quot;
+log_info &quot;Build #${BUILD_NUMBER} - $(git log -1 --pretty=format:&apos;%h - %s&apos;)&quot;
+echo &quot;==========================================&quot;
+
+docker ps --filter &quot;name=komprabot&quot; --format &quot;table {{.Names}}\t{{.Status}}\t{{.Ports}}&quot;</command>
+      <configuredLocalRules/>
+    </hudson.tasks.Shell>
+  </builders>
+  <publishers/>
+  <buildWrappers>
+    <org.jenkinsci.plugins.credentialsbinding.impl.SecretBuildWrapper plugin="credentials-binding@702.vfe613e537e88">
+      <bindings>
+        <org.jenkinsci.plugins.credentialsbinding.impl.StringBinding>
+          <credentialsId>KOMPRABOT_BOT_TOKEN</credentialsId>
+          <variable>KOMPRABOT_BOT_TOKEN</variable>
+        </org.jenkinsci.plugins.credentialsbinding.impl.StringBinding>
+        <org.jenkinsci.plugins.credentialsbinding.impl.StringBinding>
+          <credentialsId>KOMPRABOT_USE_WEBHOOKS</credentialsId>
+          <variable>KOMPRABOT_USE_WEBHOOKS</variable>
+        </org.jenkinsci.plugins.credentialsbinding.impl.StringBinding>
+        <org.jenkinsci.plugins.credentialsbinding.impl.StringBinding>
+          <credentialsId>KOMPRABOT_WEBHOOK_URL</credentialsId>
+          <variable>KOMPRABOT_WEBHOOK_URL</variable>
+        </org.jenkinsci.plugins.credentialsbinding.impl.StringBinding>
+      </bindings>
+    </org.jenkinsci.plugins.credentialsbinding.impl.SecretBuildWrapper>
+  </buildWrappers>
+</project>

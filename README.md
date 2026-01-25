@@ -18,19 +18,27 @@ docker-compose up -d
 ## 📦 Módulos
 
 ### **infra/** - Infraestructura base
-Servicios core y utilidades generales
-
-### **kashflow/** - Sistema Kashflow
-Servicios relacionados con Kashflow
-
-### **komprabot/** - Sistema Komprabot
-Servicios del bot de compras
+Servicios core y utilidades generales:
+- Nginx Proxy Manager
+- Cloudflare Tunnel
+- Jenkins (CI/CD)
+- Adminer
+- Portainer
+- Duplicati (Backups)
 
 ### **monitoring/** - Monitoreo
 Prometheus, Grafana y herramientas de observabilidad
 
-### **otros/** - Servicios diversos
-Contenedores experimentales o de prueba (Emulatorjs, etc.)
+### **others/** - Servicios diversos
+Contenedores experimentales o de prueba
+
+## 🤖 Aplicaciones Desplegadas
+
+### Komprabot (Bot de Telegram)
+**Deploy**: Automático vía Jenkins CI/CD desde GitHub
+- Push a `main` → Webhook → Jenkins → Build → Deploy
+- **No** incluido en este repositorio (repo separado)
+- Variables configuradas como secretos en Jenkins
 
 ## 📝 Configuración
 
@@ -41,19 +49,19 @@ Edita el archivo `.env` en la raíz con las variables necesarias para cada servi
 
 ```
 khosting/
-├── docker-compose.yml              # Orquestador principal
+├── docker-compose.yml              # Orquestador principal (usa 'include')
 ├── .env                            # Variables de entorno
+├── .env.example                    # Template de variables
 ├── infra/
-│   └── docker-compose.infra.yml    # Servicios de infraestructura
-├── kashflow/
-│   └── docker-compose.kashflow.yml # Servicios Kashflow
-├── komprabot/
-│   └── docker-compose.komprabot.yml # Servicios Komprabot
+│   ├── docker-compose.infra.yml    # Servicios de infraestructura
+│   └── Dockerfile.jenkins          # Jenkins con Docker CLI
 ├── monitoring/
-│   ├── docker-compose.monitoring.yml # Prometheus, Grafana
-│   ├── prometheus.yml
-│   ├── datasources.yml
-│   └── dashboards.yml
-└── otros/
-    └── docker-compose.otros.yml    # Servicios diversos/experimentales
+│   └── docker-compose.monitoring.yml # Prometheus, Grafana, Node Exporter
+├── prometheus/
+│   └── prometheus.yml              # Configuración de Prometheus
+└── others/
+    └── docker-compose.others.yml    # Servicios diversos/experimentales
+
+Aplicaciones (repos separados con CI/CD):
+- komprabot → https://github.com/usuario/komprabot (deploy automático)
 ```

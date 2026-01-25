@@ -2,8 +2,6 @@
 include:
   - path: ./infra/docker-compose.infra.yml
   - path: ./monitoring/docker-compose.monitoring.yml
-  - path: ./kashflow/docker-compose.kashflow.yml
-  - path: ./komprabot/docker-compose.komprabot.yml
   # - path: ./others/docker-compose.others.yml
 
 # Red compartida para todos los servicios

@@ -4,6 +4,14 @@
 # Docker volumes and data
 */data/
 */config/
+data/
+config/
+
+# Backups
+*.sql
+*.sql.gz
+*.dump
+backups/
 
 # Logs
 *.log
