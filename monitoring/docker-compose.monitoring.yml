@@ -5,8 +5,6 @@ services:
     image: grafana/grafana:latest
     container_name: grafana
     restart: unless-stopped
-    ports:
-      - "127.0.0.1:3000:3000" # FIXME: ELIMINAR
     expose:
       - "3000"
     environment:

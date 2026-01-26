@@ -40,8 +40,6 @@ services:
     image: adminer:latest
     container_name: adminer
     restart: unless-stopped
-    ports:
-      - "127.0.0.1:8090:8080" # FIXME: ELIMINAR
     expose:
       - "8080"
     environment:
@@ -57,8 +55,6 @@ services:
     image: portainer/portainer-ce:latest
     container_name: portainer
     restart: unless-stopped
-    ports:
-      - "127.0.0.1:9000:9000" # FIXME: ELIMINAR
     expose:
       - "9000"
     volumes:
@@ -74,8 +70,6 @@ services:
     image: lscr.io/linuxserver/duplicati:latest
     container_name: duplicati
     restart: unless-stopped
-    ports:
-      - "127.0.0.1:8200:8200" # FIXME: ELIMINAR
     expose:
       - "8200"
     environment:
@@ -88,13 +82,11 @@ services:
       - duplicati-config:/config
       - duplicati-backups:/backups
       # Volúmenes a respaldar
-      - postgres-data:/source/postgres:ro
       - npm-data:/source/nginx-proxy-manager:ro
       - npm-letsencrypt:/source/letsencrypt:ro
       - portainer-data:/source/portainer:ro
       - grafana-data:/source/grafana:ro
       - prometheus-data:/source/prometheus:ro
-      - komprabot-data:/source/komprabot:ro
       - jenkins-data:/source/jenkins:ro
     networks:
       - hosting-network
@@ -110,9 +102,6 @@ services:
     restart: unless-stopped
     user: root
     privileged: true
-    ports:
-      - "127.0.0.1:8100:8080" # FIXME: ELIMINAR
-      # - "127.0.0.1:50000:50000"
     expose:
       - "8080"
       - "50000"
@@ -132,17 +121,12 @@ volumes:
   duplicati-config:
   duplicati-backups:
   jenkins-data:
-  postgres-data:
-    name: khosting_postgres-data
-    external: true
+
   grafana-data:
     name: khosting_grafana-data
     external: true
   prometheus-data:
     name: khosting_prometheus-data
-    external: true
-  komprabot-data:
-    name: khosting_komprabot-data
     external: true
 
 networks:
