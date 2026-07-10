@@ -1,0 +1,31 @@
+services:
+  # Filebrowser - explorador
+  excalidraw:
+    image: filebrowser/filebrowser:latest
+    container_name: filebrowser
+    restart: unless-stopped
+    ports:
+      - "192.168.1.6:90:80"
+    expose:
+      - "80"
+    environment:
+      - TZ=America/Argentina/Buenos_Aires
+    networks:
+      - hosting-network
+    volumes:
+      - /home:/srv
+      - filebrowser-db:/database
+    security_opt:
+      - no-new-privileges:true
+    deploy:
+      resources:
+        limits:
+          memory: 128M
+
+volumes:
+  filebrowser-db:
+
+networks:
+  hosting-network:
+    name: hosting-network
+    external: true

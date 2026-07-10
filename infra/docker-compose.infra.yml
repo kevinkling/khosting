@@ -6,7 +6,7 @@ services:
     container_name: nginx-proxy-manager
     restart: unless-stopped
     ports:
-      - "127.0.0.1:81:81" # Solo accesible desde localhost
+      - "192.168.1.6:81:81" # Solo accesible desde localhost
       - "80:80"
       - "443:443"
     expose:
@@ -14,6 +14,7 @@ services:
     environment:
       DB_SQLITE_FILE: "/data/database.sqlite"
       DISABLE_IPV6: 'true'
+      TZ: America/Argentina/Buenos_Aires
     volumes:
       - npm-data:/data
       - npm-letsencrypt:/etc/letsencrypt
@@ -28,6 +29,8 @@ services:
     container_name: cloudflared
     restart: unless-stopped
     command: tunnel --no-autoupdate run --token ${CLOUDFLARE_TOKEN}
+    environment:
+      - TZ=America/Argentina/Buenos_Aires
     networks:
       - hosting-network
     depends_on:
@@ -35,28 +38,17 @@ services:
     security_opt:
       - no-new-privileges:true
 
-  # Adminer (interfaz para gestionar bases de datos)
-  adminer:
-    image: adminer:latest
-    container_name: adminer
-    restart: unless-stopped
-    expose:
-      - "8080"
-    environment:
-      - ADMINER_DEFAULT_SERVER=postgres
-      - ADMINER_DESIGN=nette
-    networks:
-      - hosting-network
-    security_opt:
-      - no-new-privileges:true
-
   # Portainer
   portainer:
-    image: portainer/portainer-ce:latest
+    image: portainer/portainer-ce:alpine
     container_name: portainer
     restart: unless-stopped
+    ports:
+      - "192.168.1.6:9000:9000"
     expose:
       - "9000"
+    environment:
+      - TZ=America/Argentina/Buenos_Aires
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - portainer-data:/data
@@ -70,6 +62,9 @@ services:
     image: lscr.io/linuxserver/duplicati:latest
     container_name: duplicati
     restart: unless-stopped
+    privileged: true #bypasesa permisos
+    ports:
+      - "192.168.1.6:8200:8200"
     expose:
       - "8200"
     environment:
@@ -81,13 +76,16 @@ services:
     volumes:
       - duplicati-config:/config
       - duplicati-backups:/backups
-      # Volúmenes a respaldar
+      # Volúmenes a respaldar -> /ruta/a/respaldar:/source:ro
       - npm-data:/source/nginx-proxy-manager:ro
       - npm-letsencrypt:/source/letsencrypt:ro
       - portainer-data:/source/portainer:ro
-      - grafana-data:/source/grafana:ro
-      - prometheus-data:/source/prometheus:ro
+      #- portainer-data:/source/portainer:ro
+      #- grafana-data:/source/grafana:ro
+      #- prometheus-data:/source/prometheus:ro
       - jenkins-data:/source/jenkins:ro
+    user: "0:0" # Ejecutar como root
+
     networks:
       - hosting-network
     security_opt:
@@ -105,14 +103,53 @@ services:
     expose:
       - "8080"
       - "50000"
+    environment:
+      - JENKINS_OPTS=
+      - JAVA_OPTS=-Xmx768m -Xms256m -XX:MaxMetaspaceSize=256m
+      - TZ=America/Argentina/Buenos_Aires
     volumes:
       - jenkins-data:/var/jenkins_home
       - /var/run/docker.sock:/var/run/docker.sock
       - ..:/khosting
+      - /home/khosting-admin/workspace/kashflow:/workspace/kashflow
     networks:
       - hosting-network
     security_opt:
       - no-new-privileges:true
+    deploy:
+      resources:
+        limits: # Maximo
+          memory: 1G
+        reservations: # Minimo
+          memory: 256M
+
+  # backup-db
+  backup-service:
+    image: offen/docker-volume-backup:v2
+    container_name: backup-db
+    restart: unless-stopped
+    environment:
+      # Configuración de backup
+      BACKUP_CRON_EXPRESSION: ${BACKUP_CRON_EXPRESSION}
+      BACKUP_FILENAME: ${BACKUP_FILENAME}
+      BACKUP_RETENTION_DAYS: "7"  # Mantener 7 días
+      BACKUP_PRUNING_PREFIX: "backup-"
+
+      # Notificaciones
+      NOTIFICATION_URLS: ${NOTIFICATION_URLS}
+      NOTIFICATION_LEVEL: "info"
+
+    volumes:
+      # Volúmenes a respaldar (agrega más según necesites)
+      - kashflow_kashflow-data:/backup/kashflow-data:ro
+      # - mysql_data:/backup/mysql-data:ro  # ← Futuro MySQL
+      # - postgres_data:/backup/postgres-data:ro  # ← Futuro PostgreSQL
+
+      # Directorio donde se guardan los backups
+      - /home/khosting-admin/backups:/archive
+
+    networks:
+      - hosting-network
 
 volumes:
   npm-data:
@@ -121,15 +158,10 @@ volumes:
   duplicati-config:
   duplicati-backups:
   jenkins-data:
-
-  grafana-data:
-    name: khosting_grafana-data
-    external: true
-  prometheus-data:
-    name: khosting_prometheus-data
+  kashflow_kashflow-data:
     external: true
 
 networks:
   hosting-network:
     name: hosting-network
-    external: true
+
