@@ -9,7 +9,7 @@ services:
     container_name: mkdocs
     restart: unless-stopped
     ports:
-      - "${MKDOCS_PUBLISH:-192.168.1.6:8000}:80"
+      - "${MKDOCS_PUBLISH:-8000}:80"
     expose:
       - "80"
     environment:
@@ -33,7 +33,7 @@ services:
     working_dir: /site
     command: mkdocs serve -a 0.0.0.0:8000 -f ${MKDOCS_CONFIG:-mkdocs.yml}
     ports:
-      - "${MKDOCS_DEV_PUBLISH:-192.168.1.6:8001}:8000"
+      - "${MKDOCS_DEV_PUBLISH:-8001}:8000"
     environment:
       - TZ=America/Argentina/Buenos_Aires
     volumes:
