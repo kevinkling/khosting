@@ -1,67 +1,33 @@
-# KHosting - Infraestructura Docker
+# KHosting
 
-Infraestructura modular de servicios Docker organizados por categorías.
+Infraestructura modular Docker para homelab: servicios de infraestructura, monitoreo y aplicaciones.
 
-## 📋 Requisitos
+## Objetivo
 
-- **Docker** y **Docker Compose** instalados
-- Archivo `.env` configurado en la raíz
+Orquestar y documentar la infraestructura del homelab mediante Docker Compose modular.
 
-## 🚀 Uso Rápido
+## Requisitos
 
-### Iniciar todos los servicios
+- Docker y Docker Compose
+- Archivo `.env` configurado en la raíz (ver `.env.example`)
+
+## Levantar el proyecto
+
 ```bash
 docker-compose up -d
 ```
 
+## Documentación
 
-## 📦 Módulos
+Toda la documentación técnica vive en [`docs/`](docs/).
 
-### **infra/** - Infraestructura base
-Servicios core y utilidades generales:
-- Nginx Proxy Manager
-- Cloudflare Tunnel
-- Jenkins (CI/CD)
-- Adminer
-- Portainer
-- Duplicati (Backups)
+- Índice: [`docs/pages/index.md`](docs/pages/index.md)
+- Guía de edición: [`docs/README.md`](docs/README.md)
 
-### **monitoring/** - Monitoreo
-Prometheus, Grafana y herramientas de observabilidad
+Para previsualizar con Material for MkDocs:
 
-### **others/** - Servicios diversos
-Contenedores experimentales o de prueba
-
-## 🤖 Aplicaciones Desplegadas
-
-### Komprabot (Bot de Telegram)
-**Deploy**: Automático vía Jenkins CI/CD desde GitHub
-- Push a `main` → Webhook → Jenkins → Build → Deploy
-- **No** incluido en este repositorio (repo separado)
-- Variables configuradas como secretos en Jenkins
-
-## 📝 Configuración
-
-Edita el archivo `.env` en la raíz con las variables necesarias para cada servicio.
-
-
-## 📂 Estructura del Proyecto
-
-```
-khosting/
-├── docker-compose.yml              # Orquestador principal (usa 'include')
-├── .env                            # Variables de entorno
-├── .env.example                    # Template de variables
-├── infra/
-│   ├── docker-compose.infra.yml    # Servicios de infraestructura
-│   └── Dockerfile.jenkins          # Jenkins con Docker CLI
-├── monitoring/
-│   └── docker-compose.monitoring.yml # Prometheus, Grafana, Node Exporter
-├── prometheus/
-│   └── prometheus.yml              # Configuración de Prometheus
-└── others/
-    └── docker-compose.others.yml    # Servicios diversos/experimentales
-
-Aplicaciones (repos separados con CI/CD):
-- komprabot → https://github.com/usuario/komprabot (deploy automático)
+```bash
+pip install -r docs/requirements-mkdocs.txt
+mkdocs serve                  # versión pública
+mkdocs serve -f mkdocs.private.yml   # versión completa (homelab)
 ```

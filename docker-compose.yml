@@ -3,6 +3,7 @@ include:
   - path: ./infra/docker-compose.infra.yml
   - path: ./monitoring/docker-compose.monitoring.yml
   - path: ./others/docker-compose.others.yml
+  - path: ./docs/docker-compose.docs.yml
 
 # Red compartida para todos los servicios
 networks:

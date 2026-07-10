@@ -1,0 +1,47 @@
+services:
+  mkdocs:
+    build:
+      context: ..
+      dockerfile: docs/Dockerfile
+      args:
+        MKDOCS_CONFIG: ${MKDOCS_CONFIG:-mkdocs.yml}
+    image: khosting-mkdocs:latest
+    container_name: mkdocs
+    restart: unless-stopped
+    ports:
+      - "192.168.1.6:8000:80"
+    expose:
+      - "80"
+    environment:
+      - TZ=America/Argentina/Buenos_Aires
+    networks:
+      - hosting-network
+    security_opt:
+      - no-new-privileges:true
+    deploy:
+      resources:
+        limits:
+          memory: 64M
+
+  # Solo desarrollo: live reload con mkdocs serve (no usar en producción)
+  mkdocs-dev:
+    image: squidfunk/mkdocs-material:latest
+    container_name: mkdocs-dev
+    profiles:
+      - dev
+    restart: unless-stopped
+    working_dir: /site
+    command: mkdocs serve -a 0.0.0.0:8000 -f ${MKDOCS_CONFIG:-mkdocs.yml}
+    ports:
+      - "192.168.1.6:8001:8000"
+    environment:
+      - TZ=America/Argentina/Buenos_Aires
+    volumes:
+      - ..:/site
+    networks:
+      - hosting-network
+
+networks:
+  hosting-network:
+    name: hosting-network
+    external: true
