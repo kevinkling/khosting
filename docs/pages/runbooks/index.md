@@ -1,11 +1,17 @@
 # Runbooks
 
-Procedimientos operativos paso a paso para tareas recurrentes.
+Procedimientos operativos paso a paso.
 
-## Contenido
+## Runbooks disponibles
 
-<!-- Documentación pendiente -->
+| Runbook | Descripción |
+|---------|-------------|
+| [Levantar el stack](start-stack.md) | Iniciar todos los servicios |
+| [Reiniciar NPM y túnel](restart-proxy-tunnel.md) | Recuperar acceso público |
+| [Acceso SSH vía Tailscale](ssh-tailscale.md) | Conectar al host remotamente |
+| [Backup con Duplicati](duplicati-backup.md) | Ejecutar y verificar backups |
 
 ## Enlaces relacionados
 
-- [Volver al inicio](../index.md)
+- [Troubleshooting](../troubleshooting/index.md)
+- [Cheatsheets](../cheatsheets/index.md)

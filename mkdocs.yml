@@ -3,6 +3,9 @@ site_description: Documentación del homelab
 docs_dir: docs/pages
 site_dir: docs/.site
 
+exclude_docs: |
+  private/**
+
 theme:
   name: material
   language: es
@@ -49,11 +52,31 @@ markdown_extensions:
 
 nav:
   - Inicio: index.md
+  - Esquema:
+      - Resumen: architecture/index.md
+      - Flujos de acceso: architecture/access-flows.md
+      - Topología de red: architecture/network-topology.md
   - Infraestructura:
       - Resumen: infrastructure/index.md
       - Configuración del servidor: infrastructure/server-setup.md
-  - Servicios: services/index.md
-  - Redes: networking/index.md
+      - Docker: infrastructure/docker.md
+  - Servicios:
+      - Resumen: services/index.md
+      - Nginx Proxy Manager: services/nginx-proxy-manager.md
+      - Cloudflare Tunnel: services/cloudflare-tunnel.md
+      - Portainer: services/portainer.md
+      - Duplicati: services/duplicati.md
+      - Jenkins: services/jenkins.md
+      - Backup Service: services/backup-service.md
+      - Glances: services/glances.md
+      - FileBrowser: services/filebrowser.md
+      - MkDocs: services/mkdocs.md
+  - Redes:
+      - Resumen: networking/index.md
+      - Tailscale: networking/tailscale.md
+      - Cloudflare Tunnel: networking/cloudflare-tunnel.md
+      - Nginx Proxy Manager: networking/nginx-proxy-manager.md
+      - DNS: networking/dns.md
   - Monitoreo: monitoring/index.md
   - Seguridad: security/index.md
   - Bases de datos: databases/index.md
@@ -83,8 +106,18 @@ nav:
       - Backups: inventory/backups/index.md
       - Variables: inventory/variables/index.md
       - Dependencias: inventory/dependencies/index.md
-  - Runbooks: runbooks/index.md
-  - Troubleshooting: troubleshooting/index.md
+  - Runbooks:
+      - Resumen: runbooks/index.md
+      - Levantar el stack: runbooks/start-stack.md
+      - Reiniciar NPM y túnel: runbooks/restart-proxy-tunnel.md
+      - Acceso SSH vía Tailscale: runbooks/ssh-tailscale.md
+      - Backup con Duplicati: runbooks/duplicati-backup.md
+  - Troubleshooting:
+      - Resumen: troubleshooting/index.md
+      - Túnel Cloudflare caído: troubleshooting/cloudflare-tunnel.md
+      - NPM no enruta: troubleshooting/npm-routing.md
+      - SSH por Tailscale: troubleshooting/ssh-tailscale.md
+      - Puertos y binds: troubleshooting/port-binds.md
   - Cheatsheets:
       - Resumen: cheatsheets/index.md
       - Docker: cheatsheets/docker.md

@@ -26,7 +26,7 @@ Configurar WiFi con `nmtui` (NetworkManager Text User Interface).
 
 ```bash
 sudo ufw allow ssh
-sudo ufw show added    # verificar regla
+sudo ufw show added
 sudo ufw enable
 ```
 
@@ -37,9 +37,12 @@ sudo ufw enable
 
 ## Instalaciones secundarias
 
-- Tailscale (VPN peer-to-peer)
-- Node.js LTS
-- Utilidades: `lm-sensors`, `neovim`, `btop`, `zsh`
+| Software | Uso |
+|----------|-----|
+| Tailscale | VPN mesh para acceso SSH remoto |
+| Docker + Docker Compose | Orquestación de servicios |
+| Node.js LTS | Herramientas de desarrollo |
+| lm-sensors, neovim, btop, zsh | Utilidades del sistema |
 
 ### Shell Zsh
 
@@ -49,6 +52,17 @@ chsh -s $(which zsh)
 
 Instalar Oh My Zsh según preferencia.
 
+## Tailscale (acceso SSH)
+
+Tailscale se instala en el host y en cada PC desde donde se administra.
+
+1. Instalar: [tailscale.com/download](https://tailscale.com/download)
+2. Autenticar: `sudo tailscale up`
+3. Conectar por SSH usando la IP Tailscale del host
+
+!!! note "Solo SSH"
+    Tailscale no enruta tráfico de servicios web. Ver [Tailscale](../networking/tailscale.md).
+
 ## Configuración general
 
 ### Zona horaria
@@ -57,15 +71,25 @@ Instalar Oh My Zsh según preferencia.
 sudo timedatectl set-timezone America/Argentina/Buenos_Aires
 ```
 
-### Acceso SSH desde internet
-
-<!-- Documentar configuración DNS/túnel cuando corresponda -->
-
 ## Docker
 
-<!-- Ver sección de instalación Docker — pendiente de documentar pasos detallados -->
+Instalar Docker Engine y el plugin Compose según la [documentación oficial](https://docs.docker.com/engine/install/ubuntu/).
+
+```bash
+# Verificar instalación
+docker --version
+docker compose version
+
+# Levantar el stack del homelab
+cd /ruta/a/khosting
+docker compose up -d
+```
+
+Ver [Docker](docker.md) para la estructura de composes y la red compartida.
 
 ## Enlaces relacionados
 
 - [Infraestructura](index.md)
+- [Seguridad](../security/index.md)
+- [Runbook SSH vía Tailscale](../runbooks/ssh-tailscale.md)
 - [Volver al inicio](../index.md)

@@ -1,12 +1,28 @@
 # Volúmenes
 
-Volúmenes Docker y rutas de almacenamiento persistente.
+Volúmenes Docker persistentes del homelab.
 
-## Contenido
+## Volúmenes activos
 
-<!-- Documentación pendiente -->
+| Volumen | Servicio | Contenido |
+|---------|----------|-----------|
+| `npm-data` | NPM | Configuración y DB SQLite |
+| `npm-letsencrypt` | NPM | Certificados SSL |
+| `portainer-data` | Portainer | Configuración |
+| `duplicati-config` | Duplicati | Configuración de backups |
+| `duplicati-backups` | Duplicati | Archivos de backup |
+| `jenkins-data` | Jenkins | Home de Jenkins |
+| `filebrowser-db` | FileBrowser | Base de usuarios |
+| `kashflow_kashflow-data` | Kashflow (externo) | Datos de la app |
+
+## Backups
+
+| Volumen | Respaldado por |
+|---------|----------------|
+| npm-data, npm-letsencrypt, portainer-data, jenkins-data | Duplicati |
+| kashflow_kashflow-data | backup-service |
 
 ## Enlaces relacionados
 
-- [Inventario](../index.md)
-- [Volver al inicio](../../index.md)
+- [Backups](../backups/index.md)
+- [Contenedores](../docker/containers/index.md)

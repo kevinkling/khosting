@@ -1,16 +1,37 @@
 # Documentación KHosting
 
-Fuente de verdad documental del homelab. Todo el contenido está en archivos Markdown (`.md`).
+Fuente de verdad documental del homelab. Todo el contenido publicable está en archivos Markdown (`.md`).
 
 ## Estructura
 
 ```text
 docs/
 ├── pages/          # Contenido publicable (docs_dir de MkDocs)
+│   ├── architecture/   # Esquema y diagramas
+│   ├── infrastructure/
+│   ├── services/
+│   ├── networking/
+│   ├── inventory/
+│   ├── runbooks/
+│   ├── troubleshooting/
+│   └── private/        # EXCLUIDO del sitio público (credenciales)
 ├── templates/      # Plantillas reutilizables (no publicadas)
 ├── diagrams/       # Diagramas Mermaid y Excalidraw
 └── assets/         # Imágenes y recursos estáticos
 ```
+
+## Navegación del sitio
+
+El sitio usa pestañas top-level en MkDocs Material:
+
+| Pestaña | Contenido |
+|---------|-----------|
+| Inicio | Resumen del homelab |
+| Esquema | Diagramas y flujos (Tailscale, Cloudflare, NPM) |
+| Infraestructura | Host, Docker, server setup |
+| Servicios | Un documento por contenedor |
+| Redes | Tailscale, túnel, NPM, DNS |
+| ... | Inventario, runbooks, troubleshooting, etc. |
 
 ## Editar documentación
 
@@ -49,11 +70,17 @@ mkdocs build
 
 Salida: `docs/.site/`
 
+Con Docker (desarrollo):
+
+```bash
+docker compose --profile dev up mkdocs-dev
+```
+
 ## Secretos y credenciales
 
-- Contraseñas, tokens y claves **no** se documentan en Markdown.
+- Contraseñas, tokens y claves **no** se documentan en Markdown público.
 - Usar `.env` en la raíz del proyecto o la UI de cada servicio.
-- Las plantillas de acceso están en `docs/templates/credential.md`.
+- La carpeta `docs/pages/private/` contiene credenciales y está **excluida** del build (`exclude_docs` en `mkdocs.yml`).
 
 ## Diagramas
 

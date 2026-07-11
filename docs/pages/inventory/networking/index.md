@@ -1,14 +1,22 @@
-# Redes (inventario)
+# Redes — Inventario
 
-Inventario de redes, puertos y DNS.
+Activos de red del homelab.
 
 ## Contenido
 
-- [Redes](networks/index.md)
-- [Puertos](ports/index.md)
-- [DNS](dns/index.md)
+- [Redes Docker](networks/index.md) — `hosting-network`
+- [Puertos](ports/index.md) — mapa de puertos del host
+- [DNS](dns/index.md) — registros y dominios
+
+## Interfaces del host
+
+| Interfaz | IP |
+|----------|-----|
+| WiFi | 192.168.1.6/24 |
+| Ethernet | 192.168.1.9/24 |
 
 ## Enlaces relacionados
 
+- [Redes](../../networking/index.md)
+- [Topología](../../architecture/network-topology.md)
 - [Inventario](../index.md)
-- [Volver al inicio](../../index.md)

@@ -11,7 +11,7 @@ config/
 *.sql
 *.sql.gz
 *.dump
-backups/
+/backups/
 
 # Logs
 *.log

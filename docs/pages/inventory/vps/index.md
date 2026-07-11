@@ -1,12 +1,20 @@
 # VPS
 
-Servidores virtuales externos al homelab local.
+Servidores virtuales externos al host físico.
 
-## Contenido
+## Estado actual
 
-<!-- Documentación pendiente -->
+No hay VPS activos en el homelab. Todo corre en el host físico `khosting`.
+
+## Futuro
+
+Si se agregan VPS (ej. para redundancia o servicios en la nube), documentar aquí:
+
+| Hostname | Proveedor | IP | Rol |
+|----------|-----------|-----|-----|
+| _ejemplo_ | _proveedor_ | _ip_ | _descripción_ |
 
 ## Enlaces relacionados
 
+- [Servidores](../servers/index.md)
 - [Inventario](../index.md)
-- [Volver al inicio](../../index.md)

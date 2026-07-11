@@ -1,13 +1,28 @@
-# DNS
+# DNS — Inventario
 
-Registros DNS y resolución de nombres.
+Registros DNS y dominios gestionados.
 
-## Contenido
+## Proveedor
 
-<!-- Documentación pendiente -->
+Cloudflare DNS para todos los dominios públicos.
+
+## Patrón
+
+| Tipo | Uso |
+|------|-----|
+| CNAME | Subdominio → túnel Cloudflare |
+| A | No usado (túnel evita exponer IP) |
+
+## Dominios
+
+Ver [Dominios](../../domains/index.md) para la tabla completa.
+
+## DNS interno
+
+- **LAN:** acceso por IP directa (`192.168.1.6`)
+- **Tailscale:** MagicDNS para resolver el host en la tailnet
 
 ## Enlaces relacionados
 
-- [Redes (inventario)](../index.md)
-- [Inventario](../../index.md)
-- [Volver al inicio](../../../index.md)
+- [DNS — Redes](../../../networking/dns.md)
+- [Dominios](../../domains/index.md)

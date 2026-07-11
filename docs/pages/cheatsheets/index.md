@@ -4,8 +4,9 @@ Referencia rápida de comandos y procedimientos.
 
 ## Contenido
 
-- [Docker](docker.md)
+- [Docker](docker.md) — Compose, deploy, red
 
 ## Enlaces relacionados
 
-- [Volver al inicio](../index.md)
+- [Runbooks](../runbooks/index.md)
+- [Troubleshooting](../troubleshooting/index.md)

@@ -1,12 +1,33 @@
-# Variables
+# Variables de entorno
 
-Variables de entorno y configuración relevante.
+Variables definidas en `.env` del proyecto.
 
-## Contenido
+## Archivo
 
-<!-- Documentación pendiente -->
+`.env` en la raíz del repositorio (no versionado). Plantilla en `.env.example`.
+
+## Variables activas
+
+| Variable | Servicio | Uso |
+|----------|----------|-----|
+| `CLOUDFLARE_TOKEN` | cloudflared | Token del túnel |
+| `DUPLICATI_ENCRYPTION_KEY` | Duplicati | Cifrado de config |
+| `DUPLICATI_PASSWORD` | Duplicati | Contraseña webservice |
+| `BACKUP_CRON_EXPRESSION` | backup-service | Programación cron |
+| `BACKUP_FILENAME` | backup-service | Patrón de nombre |
+| `NOTIFICATION_URLS` | backup-service | URLs de notificación |
+| `MKDOCS_PUBLISH` | mkdocs | Puerto de publicación |
+| `MKDOCS_DEV_PUBLISH` | mkdocs-dev | Puerto de desarrollo |
+
+## Variables preparadas (futuro)
+
+| Variable | Servicio futuro |
+|----------|-----------------|
+| `GRAFANA_USER`, `GRAFANA_PASSWORD` | Grafana |
+| `MYSQL_*` | MySQL |
+| `POSTGRES_*` | PostgreSQL |
 
 ## Enlaces relacionados
 
-- [Inventario](../index.md)
-- [Volver al inicio](../../index.md)
+- [Seguridad](../../security/index.md)
+- `.env.example` en la raíz del repositorio
