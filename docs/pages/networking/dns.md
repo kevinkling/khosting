@@ -29,6 +29,7 @@ Completar con los hostnames reales configurados en Cloudflare y NPM:
 |---------|----------|----------------|-------|
 | _ejemplo.docs.domain_ | MkDocs | `mkdocs:80` | Documentación |
 | _ejemplo.jenkins.domain_ | Jenkins | `jenkins:8080` | CI/CD |
+| `vault.kashflow.site` | Vaultwarden | `vaultwarden:80` | Gestor de contraseñas (websockets ON) |
 | _ejemplo.app.domain_ | Kashflow | _contenedor:puerto_ | App principal |
 
 !!! note "Completar según despliegue"

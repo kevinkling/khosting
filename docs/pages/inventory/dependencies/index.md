@@ -10,6 +10,7 @@ graph TD
   NPM --> Jenkins
   NPM --> Kashflow
   NPM --> MkDocs
+  NPM --> Vaultwarden
 
   Jenkins --> DockerSocket[Docker socket]
   Jenkins --> KashflowVol[/workspace/kashflow]
@@ -18,6 +19,7 @@ graph TD
   Duplicati --> LetsEncrypt[npm-letsencrypt]
   Duplicati --> PortainerVol[portainer-data]
   Duplicati --> JenkinsVol[jenkins-data]
+  Duplicati --> VaultwardenVol[vaultwarden-data]
 
   BackupSvc[backup-service] --> KashflowData[kashflow_kashflow-data]
 

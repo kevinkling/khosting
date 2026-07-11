@@ -35,7 +35,20 @@ sequenceDiagram
 |----------|-------------|-------|
 | Jenkins | NPM + túnel | Webhook de GitHub vía dominio público |
 | Kashflow | NPM + túnel | App desplegada en `/workspace/kashflow` |
+| Vaultwarden | NPM + túnel | `vault.kashflow.site` — gestor de contraseñas |
 | MkDocs | NPM + túnel (opcional) | También accesible en LAN `:8000` |
+
+## Modos de acceso
+
+Resumen de cómo se alcanza cada servicio:
+
+| Modo | Descripción | Servicios |
+|------|-------------|-----------|
+| **Solo LAN** | Bind `192.168.1.6:PUERTO`, sin dominio público | Portainer (`:9000`), Duplicati (`:8200`), FileBrowser (`:90`), Glances (`:61208`) |
+| **Solo público** | `expose` en Docker + NPM + túnel, sin puerto en LAN | Jenkins, Vaultwarden (`vault.kashflow.site`) |
+| **Dual** | LAN directa y opcionalmente dominio vía NPM + túnel | MkDocs (`:8000` + opcional `docs.*`), NPM (proxy `80/443` + admin LAN `:81`) |
+
+Ver tabla completa en [Servicios](../services/index.md).
 
 ## Acceso administrativo (SSH)
 

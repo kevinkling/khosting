@@ -11,6 +11,7 @@ Imágenes usadas por los contenedores del homelab.
 | `portainer/portainer-ce:alpine` | portainer | Docker Hub |
 | `lscr.io/linuxserver/duplicati:latest` | duplicati | LinuxServer.io |
 | Build local (`Dockerfile.jenkins`) | jenkins | Repositorio |
+| `vaultwarden/server:latest` | vaultwarden | Docker Hub |
 | `offen/docker-volume-backup:v2` | backup-db | Docker Hub |
 | `nicolargo/glances:latest` | glances | Docker Hub |
 | `filebrowser/filebrowser:latest` | filebrowser | Docker Hub |

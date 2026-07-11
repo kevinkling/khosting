@@ -67,6 +67,7 @@ nav:
       - Portainer: services/portainer.md
       - Duplicati: services/duplicati.md
       - Jenkins: services/jenkins.md
+      - Vaultwarden: services/vaultwarden.md
       - Backup Service: services/backup-service.md
       - Glances: services/glances.md
       - FileBrowser: services/filebrowser.md

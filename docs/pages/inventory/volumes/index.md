@@ -12,6 +12,7 @@ Volúmenes Docker persistentes del homelab.
 | `duplicati-config` | Duplicati | Configuración de backups |
 | `duplicati-backups` | Duplicati | Archivos de backup |
 | `jenkins-data` | Jenkins | Home de Jenkins |
+| `vaultwarden-data` | Vaultwarden | SQLite, adjuntos y configuración |
 | `filebrowser-db` | FileBrowser | Base de usuarios |
 | `kashflow_kashflow-data` | Kashflow (externo) | Datos de la app |
 
@@ -19,7 +20,7 @@ Volúmenes Docker persistentes del homelab.
 
 | Volumen | Respaldado por |
 |---------|----------------|
-| npm-data, npm-letsencrypt, portainer-data, jenkins-data | Duplicati |
+| npm-data, npm-letsencrypt, portainer-data, jenkins-data, vaultwarden-data | Duplicati |
 | kashflow_kashflow-data | backup-service |
 
 ## Enlaces relacionados

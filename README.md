@@ -11,6 +11,12 @@ Orquestar y documentar la infraestructura del homelab mediante Docker Compose mo
 - Docker y Docker Compose
 - Archivo `.env` configurado en la raíz (ver `.env.example`)
 
+Para agregar al `.env` las claves nuevas de `.env.example` sin pisar valores existentes:
+
+```bash
+./scripts/sync-env.sh
+```
+
 ## Levantar el proyecto
 
 ```bash

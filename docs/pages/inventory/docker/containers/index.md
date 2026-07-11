@@ -6,7 +6,7 @@ Registro de contenedores Docker desplegados.
 
 | Campo | Valor |
 |-------|-------|
-| Total contenedores | 9 |
+| Total contenedores | 10 |
 | Red compartida | hosting-network |
 | Host (bind) | 192.168.1.6 |
 
@@ -19,6 +19,7 @@ Registro de contenedores Docker desplegados.
 | portainer | infra | portainer/portainer-ce:alpine | http://192.168.1.6:9000 |
 | duplicati | infra | lscr.io/linuxserver/duplicati:latest | http://192.168.1.6:8200 |
 | jenkins | infra | build local (Dockerfile.jenkins) | vía NPM / túnel |
+| vaultwarden | infra | vaultwarden/server:latest | vía NPM / túnel (`vault.kashflow.site`) |
 | backup-service | infra | offen/docker-volume-backup:v2 | — |
 | glances | monitoring | nicolargo/glances:latest | http://192.168.1.6:61208 |
 | filebrowser | others | filebrowser/filebrowser:latest | http://192.168.1.6:90 |

@@ -42,6 +42,7 @@ Solo SSH está permitido desde la red. Los servicios web no necesitan puertos ab
 | Duplicati | `.env` → `DUPLICATI_*` |
 | Credenciales Jenkins | UI de Jenkins |
 | Credenciales NPM | UI de NPM |
+| Vaultwarden | `.env` → `VAULTWARDEN_*` |
 
 !!! danger "Nunca en Markdown"
     Contraseñas, tokens y claves no se documentan en archivos `.md` del repositorio.

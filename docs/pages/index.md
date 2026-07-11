@@ -11,6 +11,7 @@ Documentación del homelab: infraestructura, servicios, inventario y operaciones
 | **Cloudflare Tunnel** | Exposición pública sin abrir puertos en el router |
 | **Tailscale** | Acceso SSH entre PCs y el host |
 | **Jenkins** | CI/CD (deploy de Kashflow) |
+| **Vaultwarden** | Gestor de contraseñas (Bitwarden compatible) |
 
 !!! tip "Empezá por el esquema"
     Para entender cómo encajan todos los componentes, visitá la sección [Esquema](architecture/index.md).

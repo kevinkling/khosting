@@ -17,7 +17,15 @@ Esta documentación, servida como sitio estático vía Nginx.
 |--------|----------|---------|
 | Host → 80 | `MKDOCS_PUBLISH` | `8000` |
 
-Acceso LAN: `http://192.168.1.6:8000`
+## Publicación
+
+### LAN
+
+`http://192.168.1.6:8000` (variable `MKDOCS_PUBLISH`, default `8000`).
+
+### Público (opcional)
+
+Vía NPM + Cloudflare Tunnel (ej. `docs.kashflow.site`).
 
 ## Build
 
@@ -40,10 +48,6 @@ docker compose --profile dev up mkdocs-dev
 ```
 
 Puerto dev: `MKDOCS_DEV_PUBLISH` (default `8001`).
-
-## Publicación pública
-
-Opcionalmente se puede exponer vía NPM + Cloudflare Tunnel (ej. `docs.kashflow.site`).
 
 ## Enlaces relacionados
 

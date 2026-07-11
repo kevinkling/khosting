@@ -7,7 +7,7 @@ Archivos Docker Compose del monorepo.
 ```text
 khosting/
 ├── docker-compose.yml                    # Orquestador raíz
-├── infra/docker-compose.infra.yml        # NPM, túnel, Portainer, Duplicati, Jenkins, backups
+├── infra/docker-compose.infra.yml        # NPM, túnel, Portainer, Duplicati, Jenkins, Vaultwarden, backups
 ├── monitoring/docker-compose.monitoring.yml  # Glances
 ├── others/docker-compose.others.yml      # FileBrowser
 └── docs/docker-compose.docs.yml          # MkDocs

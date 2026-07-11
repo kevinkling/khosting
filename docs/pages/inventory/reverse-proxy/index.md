@@ -17,6 +17,7 @@ Completar con los hosts reales configurados en NPM:
 
 | Dominio | Destino | SSL | Notas |
 |---------|---------|-----|-------|
+| `vault.kashflow.site` | `vaultwarden:80` | Cloudflare / NPM | Websockets ON |
 | _ejemplo_ | _contenedor:puerto_ | Let's Encrypt / Cloudflare | _descripción_ |
 
 ## Flujo

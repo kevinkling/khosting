@@ -28,8 +28,10 @@ Reverse proxy con interfaz web para gestionar hosts, certificados SSL y reglas d
 
 ## Publicación
 
+Modo **dual**:
+
 - **Público:** Cloudflare Tunnel enruta tráfico a NPM en 80/443.
-- **LAN:** Panel admin en `http://192.168.1.6:81`.
+- **LAN:** Panel admin solo en `http://192.168.1.6:81` (no expuesto a Internet).
 
 Las credenciales del panel se gestionan en la UI o en `.env` — no se documentan aquí.
 

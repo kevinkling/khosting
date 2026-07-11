@@ -84,6 +84,7 @@ services:
       #- grafana-data:/source/grafana:ro
       #- prometheus-data:/source/prometheus:ro
       - jenkins-data:/source/jenkins:ro
+      - vaultwarden-data:/source/vaultwarden:ro
     user: "0:0" # Ejecutar como root
 
     networks:
@@ -123,6 +124,26 @@ services:
         reservations: # Minimo
           memory: 256M
 
+  # Vaultwarden (Bitwarden compatible)
+  vaultwarden:
+    image: vaultwarden/server:latest
+    container_name: vaultwarden
+    restart: unless-stopped
+    expose:
+      - "80"
+    environment:
+      - DOMAIN=https://vault.kashflow.site
+      - SIGNUPS_ALLOWED=${VAULTWARDEN_SIGNUPS_ALLOWED:-true}
+      - ADMIN_TOKEN=${VAULTWARDEN_ADMIN_TOKEN}
+      - WEBSOCKET_ENABLED=true
+      - TZ=America/Argentina/Buenos_Aires
+    volumes:
+      - vaultwarden-data:/data
+    networks:
+      - hosting-network
+    security_opt:
+      - no-new-privileges:true
+
   # backup-db
   backup-service:
     image: offen/docker-volume-backup:v2
@@ -158,6 +179,7 @@ volumes:
   duplicati-config:
   duplicati-backups:
   jenkins-data:
+  vaultwarden-data:
   kashflow_kashflow-data:
     external: true
 

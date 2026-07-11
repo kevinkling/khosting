@@ -34,6 +34,7 @@ Ambas se definen en `.env` — no se documentan valores aquí.
 | `npm-letsencrypt` | `/source/letsencrypt` |
 | `portainer-data` | `/source/portainer` |
 | `jenkins-data` | `/source/jenkins` |
+| `vaultwarden-data` | `/source/vaultwarden` |
 
 ## Publicación
 

@@ -6,6 +6,12 @@ Variables definidas en `.env` del proyecto.
 
 `.env` en la raíz del repositorio (no versionado). Plantilla en `.env.example`.
 
+Para sincronizar claves faltantes sin sobrescribir valores:
+
+```bash
+./scripts/sync-env.sh
+```
+
 ## Variables activas
 
 | Variable | Servicio | Uso |
@@ -18,6 +24,8 @@ Variables definidas en `.env` del proyecto.
 | `NOTIFICATION_URLS` | backup-service | URLs de notificación |
 | `MKDOCS_PUBLISH` | mkdocs | Puerto de publicación |
 | `MKDOCS_DEV_PUBLISH` | mkdocs-dev | Puerto de desarrollo |
+| `VAULTWARDEN_ADMIN_TOKEN` | vaultwarden | Token panel `/admin` |
+| `VAULTWARDEN_SIGNUPS_ALLOWED` | vaultwarden | Permitir registros (`true`/`false`) |
 
 ## Variables preparadas (futuro)
 
