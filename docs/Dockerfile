@@ -5,11 +5,10 @@ WORKDIR /app
 COPY docs/requirements-mkdocs.txt docs/requirements-mkdocs.txt
 RUN pip install --no-cache-dir -r docs/requirements-mkdocs.txt
 
-COPY mkdocs.yml mkdocs.private.yml ./
+COPY mkdocs.yml ./
 COPY docs/ docs/
 
-ARG MKDOCS_CONFIG=mkdocs.yml
-RUN mkdocs build -f "${MKDOCS_CONFIG}" -d /app/site
+RUN mkdocs build -f mkdocs.yml -d /app/site
 
 FROM nginx:alpine
 

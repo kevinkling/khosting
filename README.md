@@ -28,6 +28,11 @@ Para previsualizar con Material for MkDocs:
 
 ```bash
 pip install -r docs/requirements-mkdocs.txt
-mkdocs serve                  # versión pública
-mkdocs serve -f mkdocs.private.yml   # versión completa (homelab)
+mkdocs serve
+```
+
+Para desplegar la documentación:
+
+```bash
+docker compose up -d --build mkdocs
 ```

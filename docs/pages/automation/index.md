@@ -2,9 +2,9 @@
 
 CI/CD, pipelines, scripts y tareas programadas.
 
-## Contenido
+## Pipelines
 
-<!-- Documentación pendiente -->
+- [Jenkins — Kashflow](jenkins-kashflow.md)
 
 ## Enlaces relacionados
 

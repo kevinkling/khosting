@@ -51,7 +51,6 @@ yarn-error.log*
 
 # MkDocs build output
 docs/.site/
-docs/.site-private/
 
 # Obsidian (config local del editor)
 docs/.obsidian/

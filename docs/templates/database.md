@@ -17,13 +17,13 @@ template: database
 
 ## Credenciales
 
-> Documentar valores reales en `docs/pages/private/credentials/` si aplica.
+> Las credenciales reales viven en `.env` o en la UI del servicio. No documentar contraseñas en Markdown.
 
 | Campo | Valor |
 |-------|-------|
 | Base de datos | <!-- --> |
 | Usuario | <!-- --> |
-| Contraseña | <!-- ver sección privada --> |
+| Contraseña | <!-- ver `.env` --> |
 
 ## Backup
 

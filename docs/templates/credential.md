@@ -1,21 +1,20 @@
 ---
-template: credential
-visibility: private
+template: service-access
 ---
 
-# <!-- Servicio --> — Credenciales
+# <!-- Servicio --> — Acceso
 
 ## Acceso
 
 | Campo | Valor |
 |-------|-------|
 | URL | <!-- --> |
-| Usuario | <!-- --> |
-| Contraseña | <!-- --> |
+| Usuario | <!-- opcional --> |
+| Contraseña | Ver `.env` o UI del servicio |
 
 ## Claves adicionales
 
-<!-- API keys, encryption keys, tokens -->
+<!-- API keys, encryption keys, tokens — documentar solo dónde viven, no el valor -->
 
 ## Rotación
 

@@ -1,7 +1,3 @@
----
-visibility: private
----
-
 # Pipeline Jenkins — Kashflow
 
 Deploy automático de Kashflow vía Jenkins CI/CD.
@@ -13,7 +9,7 @@ Deploy automático de Kashflow vía Jenkins CI/CD.
 | Repositorio | kashflow |
 | Imagen | ghcr.io/kevinkling/kashflow:latest |
 | Directorio compose | /workspace/kashflow |
-| Webhook token | kashflow-webhook-2025 |
+| Webhook | Generic Webhook Trigger (token en Jenkins) |
 
 ## Trigger
 
@@ -35,9 +31,7 @@ Generic Webhook Trigger en merge de Pull Request:
 | Recurso | Ubicación |
 |---------|-----------|
 | GitHub Packages | Jenkins credential `github-packages` |
-| Webhook token | `kashflow-webhook-2025` |
-
-> No documentar tokens de GitHub en texto plano. Rotar cualquier token que haya estado en archivos de notas sin cifrar.
+| Webhook token | Configurado en Jenkins (no documentar en Markdown) |
 
 ## Pipeline completo
 
@@ -51,7 +45,7 @@ pipeline {
                 [key: 'merged', value: '$.pull_request.merged']
             ],
             causeString: 'Triggered by PR merge',
-            token: 'kashflow-webhook-2025',
+            token: env.WEBHOOK_TOKEN,
             printContributedVariables: true,
             printPostContent: false,
             regexpFilterText: '$merged',
@@ -143,5 +137,5 @@ pipeline {
 
 ## Enlaces relacionados
 
-- [Automatización](../../automation/index.md)
-- [Cheatsheet Docker](../../cheatsheets/docker.md)
+- [Automatización](index.md)
+- [Cheatsheet Docker](../cheatsheets/docker.md)

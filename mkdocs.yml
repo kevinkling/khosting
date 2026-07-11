@@ -1,18 +1,36 @@
 site_name: KHosting
-site_description: Documentación pública del homelab
+site_description: Documentación del homelab
 docs_dir: docs/pages
 site_dir: docs/.site
-
-exclude_docs: |
-  private/
 
 theme:
   name: material
   language: es
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: teal
+      accent: cyan
+      toggle:
+        icon: material/weather-night
+        name: Modo nocturno
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: teal
+      accent: cyan
+      toggle:
+        icon: material/weather-sunny
+        name: Modo claro
   features:
+    - navigation.instant
+    - navigation.tracking
+    - navigation.tabs
     - navigation.sections
     - navigation.expand
+    - navigation.top
     - search.suggest
+    - search.highlight
+    - content.code.copy
 
 plugins:
   - search
@@ -39,7 +57,9 @@ nav:
   - Monitoreo: monitoring/index.md
   - Seguridad: security/index.md
   - Bases de datos: databases/index.md
-  - Automatización: automation/index.md
+  - Automatización:
+      - Resumen: automation/index.md
+      - Jenkins — Kashflow: automation/jenkins-kashflow.md
   - IA: ai/index.md
   - Inventario:
       - Resumen: inventory/index.md

@@ -7,7 +7,6 @@ Fuente de verdad documental del homelab. Todo el contenido está en archivos Mar
 ```text
 docs/
 ├── pages/          # Contenido publicable (docs_dir de MkDocs)
-│   └── private/    # Contenido sensible (excluido del build público)
 ├── templates/      # Plantillas reutilizables (no publicadas)
 ├── diagrams/       # Diagramas Mermaid y Excalidraw
 └── assets/         # Imágenes y recursos estáticos
@@ -26,9 +25,9 @@ El proyecto **no depende de Obsidian**.
 
 1. Copiar la plantilla adecuada desde `docs/templates/`
 2. Guardar en la sección correspondiente de `docs/pages/`
-3. Agregar la página al `nav` en `mkdocs.yml` (y `mkdocs.private.yml` si es privada)
+3. Agregar la página al `nav` en `mkdocs.yml`
 
-## Builds MkDocs
+## MkDocs
 
 Instalar dependencias:
 
@@ -36,29 +35,25 @@ Instalar dependencias:
 pip install -r docs/requirements-mkdocs.txt
 ```
 
-### Build público (sin credenciales)
+Previsualizar localmente:
 
 ```bash
 mkdocs serve
+```
+
+Build estático:
+
+```bash
 mkdocs build
 ```
 
 Salida: `docs/.site/`
 
-### Build privado (documentación completa)
+## Secretos y credenciales
 
-```bash
-mkdocs serve -f mkdocs.private.yml
-mkdocs build -f mkdocs.private.yml
-```
-
-Salida: `docs/.site-private/`
-
-## Contenido sensible
-
-- Credenciales e inventario operativo: `docs/pages/private/`
-- Marcador: front matter `visibility: private`
-- El build público excluye `private/` vía `exclude_docs` en `mkdocs.yml`
+- Contraseñas, tokens y claves **no** se documentan en Markdown.
+- Usar `.env` en la raíz del proyecto o la UI de cada servicio.
+- Las plantillas de acceso están en `docs/templates/credential.md`.
 
 ## Diagramas
 
